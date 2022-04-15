@@ -28,6 +28,14 @@ void main() {
   // YOUR CODE HERE
   
   // (Placeholder code. You will want to replace it.)
-  out_color = (vec4(1, 1, 1, 0) + v_normal) / 2;
+  vec4 newLight = vec4(u_light_pos.x, u_light_pos.y, u_light_pos.z, 0);
+  float test = dot(normalize(v_normal), normalize(newLight));
+  vec4 newLightPos = vec4(u_light_pos.x, u_light_pos.y, u_light_pos.z, 0);
+  float r = distance(newLightPos, v_position);
+
+  float r2 = r * r;
+  vec3 test2 = (u_light_intensity / r2) * max(0, test);
+  out_color = vec4(test2.x, test2.y, test2.z, 1);
+  //out_color = (vec4(1, 1, 1, 0) + v_normal) / 2;
   out_color.a = 1;
 }
